@@ -8,6 +8,7 @@ public interface BaseServices<T, ID> {
 
     public Long count();
 
+
     public List<T> findAll();
 
     public Optional<T> findById(ID id);

@@ -1,5 +1,6 @@
 package com.spring.services;
 
+import com.spring.error.RecordNotFoundException;
 import com.spring.model.Person;
 import com.spring.repository.PersonRepository;
 import com.spring.services.base.BaseServices;
@@ -26,10 +27,14 @@ public class PersonServices implements BaseServices<Person, Long> {
     }
 
     @Override
-    public Optional<Person> findById(Long aLong) {
-        return personRepository.findById(aLong);
-    }
+    public Optional<Person> findById(Long id) {
+        Optional<Person> entity = personRepository.findById(id);
 
+        if (entity.isPresent()) {
+            return entity;
+        }
+        else throw new RecordNotFoundException("id " +id +" Not Found Enter Present id");
+    }
     @Override
     public void insert(Person person) {
         personRepository.save(person);
@@ -41,7 +46,7 @@ public class PersonServices implements BaseServices<Person, Long> {
     }
 
     @Override
-    public void deleteById(Long aLong) {
-        personRepository.deleteById(aLong);
+    public void deleteById(Long id) {
+        personRepository.deleteById(id);
     }
 }
